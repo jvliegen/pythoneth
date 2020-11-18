@@ -8,16 +8,16 @@ class IPv4Frame:
   C_IHL = 5
   C_DSCP_ECN = 255
   C_ID = 65535
-  C_FLAGS_OFFSET = 1024
+  C_FLAGS_OFFSET = 16384
   C_TTL = 64
 
   def __init__(self):
-    self.totallength = 0
     self.protocol = 17
     self.checksum = 0
     self.sa = [192, 168, 1, 1]
     self.da = [192, 168, 1, 201]
-    self.payload = UDPFrame()
+    self.payload = UDPFrame(100)
+    self.totallength = 20 +self.payload.getSize()
 
   def hexdump(self):
     dump = self.intToHexString(self.C_VERSION*16+self.C_IHL)
@@ -49,6 +49,9 @@ class IPv4Frame:
     for i in range(len(a)):
       hexstring = hexstring + "%02X" % a[i]
     return hexstring
+
+  def getSize(self):
+    return 20+len(self.payload)
 
 
 if __name__ == '__main__':

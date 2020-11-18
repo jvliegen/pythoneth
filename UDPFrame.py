@@ -2,12 +2,12 @@
 
 class UDPFrame:
 
-  def __init__(self):
+  def __init__(self, PLsize=10):
     self.sourceport = 235
     self.destinationport = 190
     self.length = 10 + 8
     self.checksum = 0
-    self.payload = range(1,11)
+    self.payload = range(1,1+PLsize)
 
   def hexdump(self):
     dump = self.intToHexString(self.sourceport, 4)
@@ -32,6 +32,9 @@ class UDPFrame:
     for i in range(len(a)):
       hexstring = hexstring + "%02X" % a[i]
     return hexstring
+
+  def getSize(self):
+    return 8+len(self.payload)
 
 if __name__ == '__main__':
   u = UDPFrame()

@@ -11,9 +11,13 @@ def hexdumpToAXI4Stream(hd):
 
 f = EthernetFrame()
 
-ifg = "00 0 0"
+ifg = "00 0 0\n"
 frame = hexdumpToAXI4Stream(f.hexdump())
 
 fh = open("gen/axistream.dat", "w")
+fh.write(frame)
+fh.write(ifg)
+fh.write(frame)
+fh.write(ifg)
 fh.write(frame)
 fh.close()
