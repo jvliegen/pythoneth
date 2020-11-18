@@ -34,7 +34,7 @@ class UDPFrame:
     return hexstring
 
   def getSize(self):
-    return self.length
+    return 20 + len(self.payload)
 
 if __name__ == '__main__':
   u = UDPFrame(20)

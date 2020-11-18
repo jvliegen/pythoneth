@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from TCPFrame import TCPFrame
 from UDPFrame import UDPFrame
 
 class IPv4Frame:
@@ -11,13 +12,16 @@ class IPv4Frame:
   C_FLAGS_OFFSET = 16384
   C_TTL = 64
 
-  def __init__(self):
-    self.protocol = 17
+  def __init__(self, protocol=17):
+    self.protocol = protocol
     self.checksum = 0
     self.sa = [192, 168, 1, 1]
     self.da = [192, 168, 1, 201]
-    self.payload = UDPFrame(100)
-    self.totallength = 20 +self.payload.getSize()
+    if protocol == 6 :
+      self.payload = TCPFrame(100)
+    else : 
+      self.payload = UDPFrame(100)
+    self.totallength = 20 + self.payload.getSize()
 
   def hexdump(self):
     dump = self.intToHexString(self.C_VERSION*16+self.C_IHL)

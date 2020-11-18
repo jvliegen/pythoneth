@@ -9,15 +9,28 @@ def hexdumpToAXI4Stream(hd):
   stream = stream + hd[-2:] + " 1 1\n"
   return stream
 
-f = EthernetFrame()
+# Generate frames
+f_udp = EthernetFrame(11)
+f_tcp = EthernetFrame(6)
 
+
+# Prepare hexdumps of frames + InterFrameGap
+frame_udp = hexdumpToAXI4Stream(f_udp.hexdump())
+frame_tcp = hexdumpToAXI4Stream(f_udp.hexdump())
 ifg = "00 0 0\n"
-frame = hexdumpToAXI4Stream(f.hexdump())
 
+# Write scenario to simulation model input file
 fh = open("gen/axistream.dat", "w")
-fh.write(frame)
+fh.write(frame_udp)
 fh.write(ifg)
-fh.write(frame)
+fh.write(frame_udp)
 fh.write(ifg)
-fh.write(frame)
+fh.write(frame_udp)
+fh.write(ifg)
+fh.write(frame_tcp)
+fh.write(ifg)
+fh.write(frame_tcp)
+fh.write(ifg)
+fh.write(frame_tcp)
+fh.write(ifg)
 fh.close()
