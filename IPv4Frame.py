@@ -22,6 +22,7 @@ class IPv4Frame:
     else : 
       self.payload = UDPFrame(100)
     self.totallength = 20 + self.payload.getSize()
+    self.updateChecksum()
 
   def hexdump(self):
     dump = self.intToHexString(self.C_VERSION*16+self.C_IHL)
@@ -57,9 +58,25 @@ class IPv4Frame:
   def getSize(self):
     return 20+len(self.payload)
 
+  def updateChecksum(self):
+    self.checksum = 0
+    hexstring = self.hexdump()[0:20*2]
+    doubleByteSum = 0
+    for i in range(0,len(hexstring),4):
+      doubleByteSum = doubleByteSum + int(hexstring[i:i+4], 16)
+
+    while doubleByteSum > 65536:
+      doubleByteSum = (doubleByteSum % 65536) + int((doubleByteSum - (doubleByteSum % 65536))/65536)
+
+    self.checksum = 65535 - doubleByteSum
+
+
 
 if __name__ == '__main__':
   i = IPv4Frame()
 
   print(i.hexdump())
   print(len(i.hexdump())/2)
+
+
+
