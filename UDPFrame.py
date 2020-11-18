@@ -5,7 +5,7 @@ class UDPFrame:
   def __init__(self, PLsize=10):
     self.sourceport = 235
     self.destinationport = 190
-    self.length = 10 + 8
+    self.length = PLsize + 8
     self.checksum = 0
     self.payload = range(1,1+PLsize)
 
@@ -34,10 +34,10 @@ class UDPFrame:
     return hexstring
 
   def getSize(self):
-    return 8+len(self.payload)
+    return self.length
 
 if __name__ == '__main__':
-  u = UDPFrame()
+  u = UDPFrame(20)
 
   print(u.hexdump())
   print(len(u.hexdump())/2)
