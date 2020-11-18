@@ -10,7 +10,7 @@ def hexdumpToAXI4Stream(hd):
   return stream
 
 # Generate frames
-f_udp = EthernetFrame(11)
+f_udp = EthernetFrame(17)
 f_tcp = EthernetFrame(6)
 
 
