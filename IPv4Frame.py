@@ -15,8 +15,8 @@ class IPv4Frame:
   def __init__(self, protocol=17):
     self.protocol = protocol
     self.checksum = 0
-    self.sa = [192, 168, 1, 1]
-    self.da = [192, 168, 1, 201]
+    self.sa = [192, 168, 23, 1]
+    self.da = [192, 168, 23, 235]
     if protocol == 6 :
       self.payload = TCPFrame(100)
     else : 
