@@ -2,6 +2,7 @@
 
 from TCPFrame import TCPFrame
 from UDPFrame import UDPFrame
+from ICMPFrame import ICMPFrame
 
 class IPv4Frame:
 
@@ -19,6 +20,8 @@ class IPv4Frame:
     self.da = [192, 168, 23, 235]
     if protocol == 6 :
       self.payload = TCPFrame(100)
+    elif protocol == 1 :
+      self.payload = ICMPFrame()
     else : 
       self.payload = UDPFrame(100)
     self.totallength = 20 + self.payload.getSize()

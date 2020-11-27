@@ -8,16 +8,16 @@ class EthernetFrame:
   C_MAC_ADDRESS_LENGTH = 6
   C_ETHERTYPE_LENGTH = 2
 
-  def __init__(self, IPv4protocol=17):
+  def __init__(self, EthProtocol=0, IPv4protocol=17):
     self.da = [0, 10, 53, 3, 88, 215]
     self.sa = [2, 0, 0, 1, 21, 35]
 
-    if IPv4protocol == 17:
-      self.eth = [8, 0]
-      self.payload = IPv4Frame(IPv4protocol)
-    else: 
+    if EthProtocol == 6:
       self.eth = [8, 6]
       self.payload = ARPFrame()
+    else: 
+      self.eth = [8, 0]
+      self.payload = IPv4Frame(IPv4protocol)
 
   def hexdump(self):
     dump = ""

@@ -22,34 +22,38 @@ def hexdumpToAXI4Stream_32bit(hd):
   return stream
 
 # Generate frames
-f_arp = EthernetFrame(1111)
-f_udp = EthernetFrame(17)
-f_tcp = EthernetFrame(6)
+f_arp = EthernetFrame(6)
+f_udp = EthernetFrame(0, 17)
+f_tcp = EthernetFrame(0, 6)
+f_icmp = EthernetFrame(0, 1)
 
 
 # Prepare hexdumps of frames + InterFrameGap
 frame_arp = hexdumpToAXI4Stream_32bit(f_arp.hexdump())
 frame_udp = hexdumpToAXI4Stream_32bit(f_udp.hexdump())
 frame_tcp = hexdumpToAXI4Stream_32bit(f_tcp.hexdump())
+frame_icmp = hexdumpToAXI4Stream_32bit(f_icmp.hexdump())
 ifg = "00000000 0 0\n"
 
 # Prepare hexdumps of frames + InterFrameGap
 frame_arp = hexdumpToAXI4Stream_8bit(f_arp.hexdump())
 frame_udp = hexdumpToAXI4Stream_8bit(f_udp.hexdump())
 frame_tcp = hexdumpToAXI4Stream_8bit(f_tcp.hexdump())
+frame_icmp = hexdumpToAXI4Stream_8bit(f_icmp.hexdump())
 ifg = "00 0 0\n"*12
 
 
 # Write scenario to simulation model input file
 fh = open("gen/axistream.dat", "w")
+fh.write(frame_icmp)
 # fh.write(frame_arp)
 # fh.write(ifg)
 # fh.write(frame_arp)
+# # fh.write(ifg)
+# fh.write(frame_udp)
 # fh.write(ifg)
-fh.write(frame_udp)
-fh.write(ifg)
-fh.write(frame_udp)
-fh.write(ifg)
+# fh.write(frame_udp)
+# fh.write(ifg)
 # fh.write(frame_tcp)
 # fh.write(ifg)
 # fh.write(frame_tcp)
