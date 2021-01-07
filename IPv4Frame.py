@@ -23,7 +23,7 @@ class IPv4Frame:
     elif protocol == 1 :
       self.payload = ICMPFrame()
     else : 
-      self.payload = UDPFrame(100)
+      self.payload = UDPFrame(99)
     self.totallength = 20 + self.payload.getSize()
     self.updateChecksum()
 
